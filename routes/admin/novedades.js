@@ -1,4 +1,5 @@
 var express = require('express');
+const pool = require('../../models/bd');
 var router = express.Router();
 var novedadesModel = require('../../models/novedadesModel');
 
@@ -45,5 +46,49 @@ router.post('/agregar', async (req, res, next) => {
   }
 })
 
+//eliminar
+
+router.get("/eliminar/:id", async (req, res, next) => {
+  var id = req.params.id;
+  await novedadesModel.deleteNovedadesById(id);
+  res.redirect("/admin/novedades");
+});
+
+//cierro get de eliminar
+
+//modificar la vista, formularios y los datos cargados
+router.get("/modificar/:id", async (req, res, next) => {
+  var id = req.params.id;
+  var novedad = await novedadesModel.getNovedadById(id);
+
+  res.render("admin/modificar", {
+    layout: "admin/layout" ,
+    novedad
+  });
+});
+
+//actualizar
+
+router.post("/modificar", async (req, res, next) => {
+  try {
+    var obj = {
+      titulo: req.body.titulo,
+      subtitulo: req.body.subtitulo,
+      cuerpo: req.body.cuerpo
+    }
+    //console.log(obj)
+    await novedadesModel.modificarNovedadById(obj, req.body.id);
+    res.redirect("/admin/novedades");
+
+  } 
+  catch(error) {
+    console.log(error)
+    res.render("admin/modificar", {
+      layout: "admin/layout",
+      error: true,
+      message: "No se modificó la novedad"
+    })
+  }
+})
 
 module.exports = router;
