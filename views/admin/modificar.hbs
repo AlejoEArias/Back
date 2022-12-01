@@ -9,12 +9,24 @@
                     <input type="text" class="form-control" name="titulo" value="{{novedad.titulo}}">
                 </div>
                 <div class="form-group">
+                    <br>
                     <label for="">Subtítulo</label>
                     <input type="text" class="form-control" name="subtitulo" value="{{novedad.subtitulo}}">
                 </div>
                 <div class="form-group">
+                    <br>
                     <label for="">Cuerpo</label>
                     <textarea name="cuerpo" class="form-control">{{novedad.cuerpo}}</textarea>
+                </div>
+                <div class="form-group">
+                    <br>
+                    <p>
+                        <label>Imagen: <input type="file" class="form-control" name="imagen" id="imagen"></label>
+                    </p>
+                    <p>
+                        <label><input type="checkbox" name="img_delete" id="img_delete" value="1" >      Eliminar imagen actual?</label>
+                        <input type="hidden" name="imagen_original" value="{{novedad.img_id}}">
+                    </p>
                 </div>
                 <button type="submit" class="btn btn-primary">Modificar</button>
             </form>
